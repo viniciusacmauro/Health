@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Full Body Health Guide — Mobile</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --surface-soft: #f8fbff;
+      --text: #132033;
+      --muted: #667085;
+      --line: #e6ebf3;
+      --accent: #2563eb;
+      --ok: #15803d;
+      --ok-soft: #edfdf2;
+      --warn: #b45309;
+      --warn-soft: #fff7ed;
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 20px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .page {
+      width: 100%;
+      padding: 12px 12px 28px;
+    }
+
+    .top-links {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+      position: sticky;
+      top: 10px;
+      z-index: 10;
+      background: rgba(245, 247, 251, 0.92);
+      backdrop-filter: blur(10px);
+      padding-bottom: 6px;
+    }
+
+    .top-links a {
+      display: block;
+      text-align: center;
+      padding: 13px 8px;
+      border-radius: 14px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      color: var(--text);
+      font-size: 0.92rem;
+      font-weight: 800;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+      color: var(--text);
+    }
+
+    h1 { font-size: clamp(2.35rem, 10vw, 3.2rem); }
+    h2 { font-size: clamp(1.95rem, 8vw, 2.5rem); }
+    h3 { font-size: 1.22rem; }
+
+    p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.58;
+    }
+
+    .section {
+      margin-top: 22px;
+      scroll-margin-top: 92px;
+    }
+
+    .section-title {
+      margin-bottom: 12px;
+      padding: 0 2px;
+    }
+
+    .stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px;
+    }
+
+    .soft {
+      background: var(--surface-soft);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 800;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      margin-bottom: 12px;
+      color: var(--accent);
+    }
+
+    .badge.ok {
+      color: var(--ok);
+      background: var(--ok-soft);
+    }
+
+    .badge.warn {
+      color: var(--warn);
+      background: var(--warn-soft);
+    }
+
+    .list {
+      margin: 12px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 12px;
+    }
+
+    .list li {
+      position: relative;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.58;
+    }
+
+    .list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .exercise, .meal, .step, .lab {
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .exercise + .exercise,
+    .meal + .meal,
+    .step + .step,
+    .lab + .lab {
+      margin-top: 10px;
+    }
+
+    .exercise strong,
+    .meal strong,
+    .step strong,
+    .lab strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1.08rem;
+      line-height: 1.28;
+      color: var(--text);
+    }
+
+    .exercise span,
+    .meal span,
+    .step span,
+    .lab span {
+      display: block;
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.58;
+    }
+
+    .exercise a {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .shopping-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      width: 100%;
+      margin-top: 12px;
+    }
+
+    .shopping-columns ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .shopping-columns li {
+      position: relative;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.5;
+    }
+
+    .shopping-columns li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    @media (max-width: 760px) {
+      .top-links {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .two-col,
+      .shopping-columns {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <nav class="top-links" aria-label="Sections">
+      <a href="#training">Training</a>
+      <a href="#nutrition">Nutrition</a>
+      <a href="#routine">Routine</a>
+    </nav>
+
+    <section class="section" id="training">
+      <div class="section-title">
+        <h1>Training</h1>
+      </div>
+
+      <div class="stack">
+        <div class="two-col">
+          <div class="card">
+            <h3>Mandatory warm-up</h3>
+            <ul class="list">
+              <li>Wall Angels — 2 × 10</li>
+              <li>Chin Tucks — 2 × 15</li>
+              <li>Band Pull-Aparts — 3 × 15</li>
+              <li>Doorframe Chest Stretch — 2 × 30 sec</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>How to run it</h3>
+            <ul class="list">
+              <li>Hard cap: 20 minutes per session.</li>
+              <li>Move quickly between exercises and keep setup simple.</li>
+              <li>When all sets hit the top of the range with clean form, add a small amount of load next session.</li>
+              <li>If time is tight, finish the full warm-up plus the first 4 exercises before the last accessory.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="badge">Day A</div>
+          <h3>Chest · Delts · Core · Pelvis</h3>
+          <div style="margin-top:12px;">
+            <div class="exercise">
+              <strong>DB Floor Press — 3 × 6–10</strong>
+              <span>Main press from your source. Stable shoulder position and reduced range keep it efficient.</span>
+              <a href="https://www.youtube.com/results?search_query=DB+Floor+Press+proper+form" target="_blank" rel="noopener noreferrer">Video search</a>
+            </div>
+            <div class="exercise">
+              <strong>DB Lateral Raise — 3 × 12–20</strong>
+              <span>High-value movement for shoulder width with low setup cost.</span>
+              <a href="https://www.youtube.com/results?search_query=Dumbbell+Lateral+Raise+proper+form" target="_blank" rel="noopener noreferrer">Video search</a>
+            </div>
+            <div class="exercise">
+              <strong>Band Face Pull — 2 × 15–20</strong>
+              <span>Rear-delt and scapular balance work from your source.</span>
+              <a href="https://www.youtube.com/results?search_query=Band+Face+Pull+proper+form" target="_blank" rel="noopener noreferrer">Video search</a>
+            </div>
+            <div class="exercise">
+              <strong>Bird-Dog — 2 × 6 / side</strong>
+              <span>Core control and spinal stability.</span>
+              <a href="https://www.youtube.com/results?search_query=Bird+Dog+exercise+proper+form" target="_blank" rel="noopener noreferrer">Video search</a>
+            </div>
+            <div class="exercise">
+              <strong>Glute Bridges — 3 × 12–15</strong>
+              <span>Lower-body stability anchor for pelvic control.</span>
+              <a href="https://www.youtube.com/results?search_query=Glute+Bridge+proper+form" target="_blank" rel="noopener noreferrer">Video search</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="badge">Day B</div>
+          <h3>Back · Rear Delts · Biceps · Pelvis</h3>
+          <div style="margin-top:12px;">
+            <div class="exercise">
+              <strong>DB Bent-Over Row — 3 × 8–12</strong>
+              <span>Main back builder from your source plan.</span>
+              <a href="https://www.youtube.com/results?search_query=Dumbbell+Bent+Over+Row+proper+form" target="_blank" rel="noopener noreferrer">Video search</a>
+            </div>
+            <div class="exercise">
+              <strong>Seated Band Row — 2 × 12–15</strong>
+              <span>Extra upper-back work without much fatigue cost.</span>
+              <a href="https://www.youtube.com/results?search_query=Seated+Band+Row+proper+form" target="_blank" rel="noopener noreferrer">Video search</a>
+            </div>
+            <div class="exercise">
+              <strong>DB Reverse Fly — 3 × 12</strong>
+              <span>Keep one rear-delt movement only.</span>
+              <a href="https://www.youtube.com/results?search_query=Dumbbell+Reverse+Fly+proper+form" target="_blank" rel="noopener noreferrer">Video search</a>
+            </div>
+            <div class="exercise">
+              <strong>DB Hammer Curl — 2–3 × 8–12</strong>
+              <span>Simple arm work that also supports forearm thickness.</span>
+              <a href="https://www.youtube.com/results?search_query=Dumbbell+Hammer+Curl+proper+form" target="_blank" rel="noopener noreferrer">Video search</a>
+            </div>
+            <div class="exercise">
+              <strong>Dumbbell Hip Thrusts — 3 × 10–15</strong>
+              <span>Lower-body stability anchor for pelvis and glutes.</span>
+              <a href="https://www.youtube.com/results?search_query=Dumbbell+Hip+Thrust+proper+form" target="_blank" rel="noopener noreferrer">Video search</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="badge">Day C</div>
+          <h3>Mixed Upper · Core · Posture</h3>
+          <div style="margin-top:12px;">
+            <div class="exercise">
+              <strong>Incline Push-Up — 3 × 8–15</strong>
+              <span>Pressing volume with lower joint cost than aggressive pressing.</span>
+              <a href="https://www.youtube.com/results?search_query=Incline+Push+Up+proper+form" target="_blank" rel="noopener noreferrer">Video search</a>
+            </div>
+            <div class="exercise">
+              <strong>DB Chest Fly (floor) — 2–3 × 10–15</strong>
+              <span>Use the floor stop from your source to control range.</span>
+              <a href="https://www.youtube.com/results?search_query=Dumbbell+Floor+Fly+proper+form" target="_blank" rel="noopener noreferrer">Video search</a>
+            </div>
+            <div class="exercise">
+              <strong>Dumbbell External Rotations — 2–3 × 12–15</strong>
+              <span>Rotator-cuff support from your shoulder sheet.</span>
+              <a href="https://www.youtube.com/results?search_query=Dumbbell+external+rotation+shoulder+proper+form" target="_blank" rel="noopener noreferrer">Video search</a>
+            </div>
+            <div class="exercise">
+              <strong>Front Plank + Chin Tuck + Scapular Wall Slides</strong>
+              <span>2 rounds for core, neck position, and posture control.</span>
+              <a href="https://www.youtube.com/results?search_query=Forearm+plank+proper+form" target="_blank" rel="noopener noreferrer">Plank</a>
+            </div>
+            <div class="exercise">
+              <strong>Goblet Squats — 3 × 10</strong>
+              <span>Lower-body stability anchor to keep pelvic and trunk control in the plan.</span>
+              <a href="https://www.youtube.com/results?search_query=Goblet+Squat+proper+form" target="_blank" rel="noopener noreferrer">Video search</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="nutrition">
+      <div class="section-title">
+        <h2>Nutrition</h2>
+      </div>
+
+      <div class="stack">
+        <div class="card">
+          <h3>Meal 1 · Breakfast</h3>
+          <div style="margin-top:12px;">
+            <div class="meal">
+              <strong>Main plate</strong>
+              <span>1 cup (250 g) plain 0% Greek yogurt mixed with 1/2 scoop of whey protein.</span>
+              <span>Top with 1/2 cup blueberries or raspberries.</span>
+              <span>Add 1 tbsp pumpkin seeds or crushed walnuts.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Meal 2 · Morning snack</h3>
+          <div style="margin-top:12px;">
+            <div class="meal">
+              <strong>Option A</strong>
+              <span>2 hard-boiled eggs + 1 part-skim string cheese.</span>
+            </div>
+            <div class="meal">
+              <strong>Option B</strong>
+              <span>150 g of 2% cottage cheese topped with sliced cucumbers and black pepper.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Meal 3 · Lunch</h3>
+          <div style="margin-top:12px;">
+            <div class="meal">
+              <strong>Main plate</strong>
+              <span>150 g cooked grilled chicken breast or extra-lean ground beef or turkey.</span>
+              <span>1 cup cooked quinoa or 1 medium baked sweet potato.</span>
+              <span>2 cups mixed dark leafy greens, plus 1 tbsp olive oil or 1/4 avocado.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Meal 4 · Afternoon snack</h3>
+          <div style="margin-top:12px;">
+            <div class="meal">
+              <strong>Option A</strong>
+              <span>4 slices, about 100 g, of deli smoked turkey breast wrapped around 1/4 avocado.</span>
+            </div>
+            <div class="meal">
+              <strong>Option B</strong>
+              <span>120 g plain Greek yogurt mixed with 10–12 almonds.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Meal 5 · Dinner</h3>
+          <div style="margin-top:12px;">
+            <div class="meal">
+              <strong>Rotation A · Omega-3 support</strong>
+              <span>160 g baked salmon fillet with roasted asparagus or Brussels sprouts tossed in olive oil.</span>
+            </div>
+            <div class="meal">
+              <strong>Rotation B · Iron support</strong>
+              <span>150 g lean sirloin steak or bison with sautéed broccoli and onions.</span>
+              <span>Add 1 cup brown rice or wild rice.</span>
+            </div>
+            <div class="meal">
+              <strong>Social / alcohol day rule</strong>
+              <span>Drop the rice or potatoes, but keep the protein portion and vegetables the same.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Meal 6 · Night snack</h3>
+          <div style="margin-top:12px;">
+            <div class="meal">
+              <strong>Option A</strong>
+              <span>150 g plain cottage cheese dusted with cinnamon.</span>
+            </div>
+            <div class="meal">
+              <strong>Option B</strong>
+              <span>1 scoop micellar casein protein powder blended with water and 1 tbsp chia seeds.</span>
+            </div>
+            <div class="meal">
+              <strong>Rule</strong>
+              <span>Keep this low-sugar and protein-centered.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Shopping list core essentials</h3>
+          <div class="shopping-columns">
+            <ul>
+              <li>Plain 0% Greek yogurt</li>
+              <li>2% cottage cheese</li>
+              <li>Whey protein</li>
+              <li>Micellar casein</li>
+              <li>Fresh salmon fillets</li>
+              <li>Lean sirloin steak or bison</li>
+              <li>Chicken breast</li>
+              <li>Extra-lean ground beef or turkey</li>
+              <li>Eggs</li>
+              <li>Part-skim string cheese</li>
+              <li>Sliced smoked turkey breast</li>
+            </ul>
+            <ul>
+              <li>Quinoa</li>
+              <li>Brown rice or wild rice</li>
+              <li>Sweet potatoes</li>
+              <li>Frozen or fresh berries</li>
+              <li>Spinach or mixed greens</li>
+              <li>Broccoli</li>
+              <li>Asparagus or Brussels sprouts</li>
+              <li>Walnuts</li>
+              <li>Pumpkin seeds</li>
+              <li>Almonds</li>
+              <li>Avocados</li>
+              <li>Olive oil</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="routine">
+      <div class="section-title">
+        <h2>Routine</h2>
+      </div>
+
+      <div class="stack">
+        <div class="card">
+          <h3>Supplements</h3>
+          <div style="margin-top:12px;">
+            <div class="step">
+              <strong>Immediately after waking · empty</strong>
+              <span>Paroxetine 15 mg</span>
+            </div>
+            <div class="step">
+              <strong>Breakfast</strong>
+              <span>Lisdexamfetamine 20 mg, Omega-3 2,500 mg, Vitamin D3 2,500 IU, Creatine 3–5 g</span>
+            </div>
+            <div class="step">
+              <strong>Post workout</strong>
+              <span>Whey protein, 1 scoop</span>
+            </div>
+            <div class="step">
+              <strong>10:30 AM</strong>
+              <span>NAC 1,200 mg</span>
+            </div>
+            <div class="step">
+              <strong>13:00</strong>
+              <span>Lisdexamfetamine 10 mg</span>
+            </div>
+            <div class="step">
+              <strong>15:30</strong>
+              <span>NAC 1,200 mg</span>
+            </div>
+            <div class="step">
+              <strong>20:30</strong>
+              <span>Magnesium bisglycinate 200 mg</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Skin Care</h3>
+          <div style="margin-top:12px;">
+            <div class="step">
+              <strong>AM routine</strong>
+              <span>Dove soap during shower, then ISDIN SPF 60.</span>
+            </div>
+            <div class="step">
+              <strong>PM routine</strong>
+              <span>Normaderm Gel (Let skin dry).</span>
+              <span>Hyaluronic Acid (Mondays, Wednesdays, and Fridays).</span>
+              <span>RoC Retinol (Tuesdays, Thursdays, and Saturdays).</span>
+              <span>Glycolic (Sundays).</span>
+              <span>CeraVe PM.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
