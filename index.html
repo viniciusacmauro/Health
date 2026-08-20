@@ -364,6 +364,51 @@
       .pill { min-width: 0; }
     }
 
+  
+    /* ---------- collapsible meal options ---------- */
+    .meal-option {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .meal-option + .meal-option { margin-top: 10px; }
+    .meal-option > summary {
+      cursor: pointer;
+      list-style: none;
+      padding: 13px 40px 13px 14px;
+      position: relative;
+      display: block;
+    }
+    .meal-option > summary::-webkit-details-marker { display: none; }
+    .meal-option > summary::after {
+      content: "";
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      width: 8px; height: 8px;
+      margin-top: -5px;
+      border-right: 2px solid var(--muted);
+      border-bottom: 2px solid var(--muted);
+      transform: rotate(45deg);
+      transition: transform 0.18s ease;
+    }
+    .meal-option[open] > summary::after { transform: rotate(-135deg); margin-top: -2px; }
+    .meal-option > summary:hover { background: var(--surface-soft); }
+    .meal-option > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+    .opt-name { display: block; color: var(--text); font-weight: 600; }
+    .opt-blurb { display: block; color: var(--muted); font-size: 0.85rem; margin-top: 2px; }
+    .opt-body {
+      padding: 0 14px 14px;
+      display: grid;
+      gap: 6px;
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+    }
+    .opt-body p { font-size: 0.95rem; }
+    @media (max-width: 760px) {
+      .meal-option > summary { padding: 15px 40px 15px 14px; }
+    }
   </style>
 </head>
 <body>
@@ -447,31 +492,61 @@
           <div class="section-card">
             <h3>Meal 1 · Breakfast</h3>
             <div class="meal-plan" style="margin-top:12px;">
-              <div class="meal-row">
-                <strong>Main plate</strong>
-                <p>1 cup (250 g) plain 0% Greek yogurt mixed with 1/2 scoop of whey protein.</p>
-                <p>Top with 1/2 cup blueberries or raspberries.</p>
-                <p>Add 1 tbsp pumpkin seeds or crushed walnuts.</p>
-                <div class="tag-row">
-                  <span class="tag">No cooking</span>
-                  <span class="tag">High protein</span>
-                  <span class="tag">Add healthy fat</span>
+              <details class="meal-option">
+                <summary><span class="opt-name">Option A · Greek yogurt bowl</span><span class="opt-blurb">No cooking · ~40 g protein</span></summary>
+                <div class="opt-body">
+                  <p>250 g plain 0% Greek yogurt mixed with 1/2 scoop of whey protein.</p>
+                  <p>Top with 1/2 cup blueberries or raspberries.</p>
+                  <p>Add 1 tbsp pumpkin seeds or crushed walnuts.</p>
+                  <div class="tag-row"><span class="tag">No cooking</span><span class="tag">High protein</span></div>
                 </div>
-              </div>
+              </details>
+              <details class="meal-option">
+                <summary><span class="opt-name">Option B · Egg scramble</span><span class="opt-blurb">Choline-focused · ~35 g protein</span></summary>
+                <div class="opt-body">
+                  <p>3 whole eggs plus 2 egg whites, scrambled with a large handful of spinach.</p>
+                  <p>1/4 avocado and 1 slice of rye or sourdough on the side.</p>
+                  <p>Choline from the yolks offsets the mild anticholinergic effect of paroxetine.</p>
+                  <div class="tag-row"><span class="tag">Cooked</span><span class="tag">Choline</span></div>
+                </div>
+              </details>
+              <details class="meal-option">
+                <summary><span class="opt-name">Option C · Protein oats</span><span class="opt-blurb">Training mornings · ~35 g protein</span></summary>
+                <div class="opt-body">
+                  <p>50 g rolled oats cooked in water or milk.</p>
+                  <p>Stir in 1 scoop of whey after it cools slightly, so it doesn&#x27;t clump.</p>
+                  <p>Half a banana and 1 tbsp natural peanut butter.</p>
+                  <div class="tag-row"><span class="tag">Carb-forward</span><span class="tag">Pre-training</span></div>
+                </div>
+              </details>
             </div>
           </div>
 
           <div class="section-card">
             <h3>Meal 2 · Morning snack</h3>
             <div class="meal-plan" style="margin-top:12px;">
-              <div class="meal-row">
-                <strong>Option A</strong>
-                <p>2 hard-boiled eggs + 1 part-skim string cheese.</p>
-              </div>
-              <div class="meal-row">
-                <strong>Option B</strong>
-                <p>150 g of 2% cottage cheese topped with sliced cucumbers and black pepper.</p>
-              </div>
+              <details class="meal-option">
+                <summary><span class="opt-name">Option A · Eggs and cheese</span><span class="opt-blurb">No prep · ~20 g protein</span></summary>
+                <div class="opt-body">
+                  <p>2 hard-boiled eggs plus 1 part-skim string cheese.</p>
+                  <div class="tag-row"><span class="tag">No cooking</span></div>
+                </div>
+              </details>
+              <details class="meal-option">
+                <summary><span class="opt-name">Option B · Cottage cheese</span><span class="opt-blurb">No prep · ~20 g protein</span></summary>
+                <div class="opt-body">
+                  <p>150 g of 2% cottage cheese topped with sliced cucumber and black pepper.</p>
+                  <div class="tag-row"><span class="tag">No cooking</span></div>
+                </div>
+              </details>
+              <details class="meal-option">
+                <summary><span class="opt-name">Option C · Nuts and fruit</span><span class="opt-blurb">Portable · no fridge needed</span></summary>
+                <div class="opt-body">
+                  <p>30 g mixed nuts with one apple or pear.</p>
+                  <p>Use this one when you&#x27;re out of the house.</p>
+                  <div class="tag-row"><span class="tag">Portable</span></div>
+                </div>
+              </details>
             </div>
           </div>
         </div>
@@ -480,25 +555,64 @@
           <div class="section-card">
             <h3>Meal 3 · Lunch</h3>
             <div class="meal-plan" style="margin-top:12px;">
-              <div class="meal-row">
-                <strong>Main plate</strong>
-                <p>150 g cooked grilled chicken breast or extra-lean ground beef or turkey.</p>
-                <p>1 cup cooked quinoa or 1 medium baked sweet potato.</p>
-                <p>2 cups mixed dark leafy greens, plus 1 tbsp olive oil or 1/4 avocado.</p>
-              </div>
+              <details class="meal-option">
+                <summary><span class="opt-name">Option A · Chicken and quinoa</span><span class="opt-blurb">~45 g protein</span></summary>
+                <div class="opt-body">
+                  <p>150 g cooked grilled chicken breast, extra-lean ground beef or turkey.</p>
+                  <p>1 cup cooked quinoa or 1 medium baked sweet potato.</p>
+                  <p>2 cups mixed dark leafy greens with 1 tbsp olive oil or 1/4 avocado.</p>
+                  <div class="tag-row"><span class="tag">Balanced</span></div>
+                </div>
+              </details>
+              <details class="meal-option">
+                <summary><span class="opt-name">Option B · Sardines or tuna</span><span class="opt-blurb">Omega-3 · ~35 g protein</span></summary>
+                <div class="opt-body">
+                  <p>1 tin (100–120 g) of sardines or tuna on 2 slices of rye, with tomato and olive oil.</p>
+                  <p>Side salad of greens.</p>
+                  <p>Your omega-3 index was 5.91% against an optimal ≥6.1% — this is the cheapest way to move it.</p>
+                  <div class="tag-row"><span class="tag">Omega-3</span><span class="tag">No cooking</span></div>
+                </div>
+              </details>
+              <details class="meal-option">
+                <summary><span class="opt-name">Option C · Beef and rice bowl</span><span class="opt-blurb">Iron · ~45 g protein</span></summary>
+                <div class="opt-body">
+                  <p>150 g extra-lean ground beef with 1 cup cooked rice.</p>
+                  <p>Half a cup of black beans, salsa, and a handful of greens.</p>
+                  <p>Heme iron plus the beans&#x27; folate; useful given ferritin at 97 µg/L.</p>
+                  <div class="tag-row"><span class="tag">Iron</span><span class="tag">Batch-cook</span></div>
+                </div>
+              </details>
             </div>
           </div>
 
           <div class="section-card">
             <h3>Meal 4 · Afternoon snack</h3>
             <div class="meal-plan" style="margin-top:12px;">
+              <details class="meal-option">
+                <summary><span class="opt-name">Option A · Turkey and avocado</span><span class="opt-blurb">~25 g protein</span></summary>
+                <div class="opt-body">
+                  <p>4 slices, about 100 g, of deli smoked turkey breast wrapped around 1/4 avocado.</p>
+                  <div class="tag-row"><span class="tag">No cooking</span></div>
+                </div>
+              </details>
+              <details class="meal-option">
+                <summary><span class="opt-name">Option B · Yogurt and almonds</span><span class="opt-blurb">~20 g protein</span></summary>
+                <div class="opt-body">
+                  <p>120 g plain Greek yogurt mixed with 10–12 almonds.</p>
+                  <div class="tag-row"><span class="tag">No cooking</span></div>
+                </div>
+              </details>
+              <details class="meal-option">
+                <summary><span class="opt-name">Option C · Shake and fruit</span><span class="opt-blurb">Lowest effort · ~25 g protein</span></summary>
+                <div class="opt-body">
+                  <p>1 scoop whey in water with an apple.</p>
+                  <p>Use this on days when appetite is still suppressed.</p>
+                  <div class="tag-row"><span class="tag">Portable</span></div>
+                </div>
+              </details>
               <div class="meal-row">
-                <strong>Option A</strong>
-                <p>4 slices, about 100 g, of deli smoked turkey breast wrapped around 1/4 avocado.</p>
-              </div>
-              <div class="meal-row">
-                <strong>Option B</strong>
-                <p>120 g plain Greek yogurt mixed with 10–12 almonds.</p>
+                <strong>Rule</strong>
+                <p>Eat this before the lisdexamfetamine wears off, not after.</p>
               </div>
             </div>
           </div>
@@ -508,27 +622,34 @@
           <div class="section-card">
             <h3>Meal 5 · Dinner</h3>
             <div class="meal-plan" style="margin-top:12px;">
-              <div class="meal-row">
-                <strong>Rotation A · Omega-3 support</strong>
-                <p>160 g baked salmon fillet with roasted asparagus or Brussels sprouts tossed in olive oil.</p>
-                <div class="tag-row">
-                  <span class="tag">Use 3 days/week</span>
-                  <span class="tag">Omega-3 focus</span>
+              <details class="meal-option">
+                <summary><span class="opt-name">Option A · Salmon</span><span class="opt-blurb">Omega-3 · aim for 3 nights/week</span></summary>
+                <div class="opt-body">
+                  <p>160 g baked salmon fillet.</p>
+                  <p>Roasted asparagus or Brussels sprouts tossed in olive oil.</p>
+                  <div class="tag-row"><span class="tag">Omega-3</span></div>
                 </div>
-              </div>
-              <div class="meal-row">
-                <strong>Rotation B · Iron support</strong>
-                <p>150 g lean sirloin steak or bison with sautéed broccoli and onions.</p>
-                <p>Add 1 cup brown rice or wild rice.</p>
-                <div class="tag-row">
-                  <span class="tag">Use 3 days/week</span>
-                  <span class="tag">Iron support</span>
-                  <span class="tag">Pair with tolerated veg</span>
+              </details>
+              <details class="meal-option">
+                <summary><span class="opt-name">Option B · Steak or bison</span><span class="opt-blurb">Iron · 2–3 nights/week</span></summary>
+                <div class="opt-body">
+                  <p>150 g lean sirloin steak or bison with sautéed broccoli and onions.</p>
+                  <p>1 cup brown or wild rice.</p>
+                  <div class="tag-row"><span class="tag">Iron</span></div>
                 </div>
-              </div>
+              </details>
+              <details class="meal-option">
+                <summary><span class="opt-name">Option C · Chicken thighs and lentils</span><span class="opt-blurb">Folate and fibre · 1–2 nights/week</span></summary>
+                <div class="opt-body">
+                  <p>180 g boneless chicken thighs, roasted.</p>
+                  <p>1 cup cooked lentils and roasted mixed vegetables.</p>
+                  <p>Cheapest of the three and the highest fibre.</p>
+                  <div class="tag-row"><span class="tag">Fibre</span><span class="tag">Budget</span></div>
+                </div>
+              </details>
               <div class="meal-row">
-                <strong>Social / alcohol day rule</strong>
-                <p>Drop the rice or potatoes, but keep the protein portion and vegetables the same.</p>
+                <strong>Rule</strong>
+                <p>In alcohol days, drop the rice or potatoes, but keep the protein portion and vegetables the same.</p>
               </div>
             </div>
           </div>
@@ -536,17 +657,30 @@
           <div class="section-card">
             <h3>Meal 6 · Night snack</h3>
             <div class="meal-plan" style="margin-top:12px;">
-              <div class="meal-row">
-                <strong>Option A</strong>
-                <p>150 g plain cottage cheese dusted with cinnamon.</p>
-              </div>
-              <div class="meal-row">
-                <strong>Option B</strong>
-                <p>1 scoop micellar casein protein powder blended with water and 1 tbsp chia seeds.</p>
-              </div>
+              <details class="meal-option">
+                <summary><span class="opt-name">Option A · Cottage cheese</span><span class="opt-blurb">Slow protein · ~20 g</span></summary>
+                <div class="opt-body">
+                  <p>150 g plain cottage cheese dusted with cinnamon.</p>
+                  <div class="tag-row"><span class="tag">No cooking</span></div>
+                </div>
+              </details>
+              <details class="meal-option">
+                <summary><span class="opt-name">Option B · Casein shake</span><span class="opt-blurb">Slow protein · ~25 g</span></summary>
+                <div class="opt-body">
+                  <p>1 scoop micellar casein blended with water and 1 tbsp chia seeds.</p>
+                  <div class="tag-row"><span class="tag">No cooking</span></div>
+                </div>
+              </details>
+              <details class="meal-option">
+                <summary><span class="opt-name">Option C · Yogurt and flax</span><span class="opt-blurb">Slow protein · ~22 g</span></summary>
+                <div class="opt-body">
+                  <p>200 g plain Greek yogurt with 1 tbsp ground flaxseed.</p>
+                  <div class="tag-row"><span class="tag">No cooking</span><span class="tag">Omega-3</span></div>
+                </div>
+              </details>
               <div class="meal-row">
                 <strong>Rule</strong>
-                <p>Keep this low-sugar and protein-centered.</p>
+                <p>Keep this low-sugar and protein-centred. Magnesium bisglycinate goes here.</p>
               </div>
             </div>
           </div>
@@ -557,40 +691,54 @@
             <h3>Shopping list core essentials</h3>
             <div class="shopping-columns">
               <ul class="priority-list" style="margin-top:12px;">
-                <li>Plain 0% Greek yogurt</li>
                 <li>2% cottage cheese</li>
-                <li>Whey protein</li>
-                <li>Micellar casein</li>
-                <li>Fresh salmon fillets</li>
-                <li>Lean sirloin steak or bison</li>
+                <li>Almonds</li>
+                <li>Apples or pears</li>
+                <li>Asparagus or Brussels sprouts</li>
+                <li>Avocados</li>
+                <li>Bananas</li>
+                <li>Black beans</li>
+                <li>Broccoli</li>
+                <li>Brown or wild rice</li>
+                <li>Chia seeds</li>
                 <li>Chicken breast</li>
-                <li>Extra-lean ground beef or turkey</li>
+                <li>Chicken thighs</li>
+                <li>Cinnamon</li>
+                <li>Cucumber</li>
+                <li>Dried or tinned lentils</li>
                 <li>Eggs</li>
-                <li>Part-skim string cheese</li>
-                <li>Sliced smoked turkey breast</li>
+                <li>Extra-lean ground beef or turkey</li>
+                <li>Fresh salmon fillets</li>
+                <li>Frozen or fresh berries</li>
+                <li>Ground flaxseed</li>
               </ul>
               <ul class="priority-list" style="margin-top:12px;">
-                <li>Quinoa</li>
-                <li>Brown rice or wild rice</li>
-                <li>Sweet potatoes</li>
-                <li>Frozen or fresh berries</li>
-                <li>Spinach or mixed greens</li>
-                <li>Broccoli</li>
-                <li>Asparagus or Brussels sprouts</li>
-                <li>Walnuts</li>
-                <li>Pumpkin seeds</li>
-                <li>Almonds</li>
-                <li>Avocados</li>
+                <li>Lean sirloin steak or bison</li>
+                <li>Micellar casein</li>
+                <li>Mixed nuts</li>
+                <li>Natural peanut butter</li>
                 <li>Olive oil</li>
+                <li>Onions</li>
+                <li>Part-skim string cheese</li>
+                <li>Plain 0% Greek yogurt</li>
+                <li>Pumpkin seeds</li>
+                <li>Quinoa</li>
+                <li>Rolled oats</li>
+                <li>Rye or sourdough bread</li>
+                <li>Salsa</li>
+                <li>Sliced smoked turkey breast</li>
+                <li>Spinach or mixed greens</li>
+                <li>Sweet potatoes</li>
+                <li>Tinned sardines or tuna</li>
+                <li>Tomatoes</li>
+                <li>Walnuts</li>
+                <li>Whey protein</li>
               </ul>
             </div>
           </div>
         </div>
       </div>
     </section>
-
-
-
 
     <section class="section" id="routine">
       <div class="section-title"><h2>Routine</h2></div>
