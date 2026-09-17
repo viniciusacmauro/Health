@@ -1,42 +1,805 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Full Body Health Guide</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --surface: #ffffff;
+      --surface-soft: #f9fafc;
+      --text: #172033;
+      --muted: #667085;
+      --line: #e6eaf2;
+      --accent: #2563eb;
+      --accent-soft: #eff6ff;
+      --ok: #15803d;
+      --ok-soft: #edfdf2;
+      --warn: #b45309;
+      --warn-soft: #fff7ed;
+      --bad: #b42318;
+      --bad-soft: #fef3f2;
+      --shadow: 0 12px 30px rgba(23, 32, 51, 0.06);
+      --radius: 18px;
+      --max: 1120px;
+      --section-tint: #f8fbff;
+      --section-line: #dbeafe;
+      --labs-tint: #f8fafc;
+      --labs-line: #e5e7eb;
+      --routine-tint: #fffaf2;
+      --routine-line: #fde7c7;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .shell {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 72px;
+    }
+    nav {
+      position: sticky;
+      top: 12px;
+      z-index: 10;
+      margin-bottom: 18px;
+      background: rgba(246, 247, 251, 0.88);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px;
+      overflow: auto;
+    }
+    nav .links { display: flex; gap: 8px; min-width: max-content; }
+    nav a {
+      text-decoration: none;
+      color: var(--muted);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+    }
+    nav a:hover, nav a:focus-visible {
+      background: var(--surface);
+      color: var(--text);
+      outline: none;
+    }
+    h1, h2, h3, h4 { margin: 0; line-height: 1.1; }
+    h1 { font-size: clamp(2rem, 3.2vw, 2.7rem); letter-spacing: -0.04em; }
+    h2 { font-size: clamp(1.45rem, 2.4vw, 2rem); letter-spacing: -0.03em; }
+    h3 { font-size: 1.05rem; }
+    h4 { font-size: 1rem; }
+    p { margin: 0; color: var(--muted); }
+    .section { margin-top: 26px; scroll-margin-top: 90px; }
+    .section-title { margin-bottom: 14px; }
+    .section-shell {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 22px;
+      overflow: hidden;
+    }
+    .section-grid {
+      display: grid;
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .cols-3 { grid-template-columns: repeat(3, 1fr); }
+    .section-card, .table-card {
+      background: var(--section-tint);
+      border: 1px solid var(--section-line);
+      border-radius: var(--radius);
+      padding: 18px;
+      max-width: 100%;
+      min-width: 0;
+    }
+    .labs-card { background: var(--labs-tint); border-color: var(--labs-line); }
+    .routine-card { background: var(--routine-tint); border-color: var(--routine-line); }
+    .status {
+      display: inline-flex; align-items: center; width: fit-content;
+      border-radius: 999px; padding: 6px 10px; font-size: 12px;
+      border: 1px solid var(--line); font-weight: 600; margin-bottom: 10px; background: var(--surface);
+    }
+    .status-ok { color: var(--ok); }
+    .status-warn { color: var(--warn); }
+    .status-info { color: var(--accent); }
+    .status-bad { color: var(--bad); }
+    .program-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .exercise-list, .plain-list, .priority-list {
+      margin: 0; padding: 0; list-style: none; display: grid; gap: 10px;
+    }
+    .exercise-list li + li, .plain-list li + li {
+      padding-top: 10px; border-top: 1px solid var(--line);
+    }
+    .priority-list li { position: relative; padding-left: 18px; }
+    .priority-list li::before {
+      content: "•"; position: absolute; left: 0; top: 0; color: var(--accent); font-weight: 700;
+    }
+    .exercise-item strong, .meal-row strong, .step strong { color: var(--text); display: block; margin-bottom: 2px; }
+    .exercise-item a { font-size: 0.9rem; display: inline; margin-left: 0.2em; }
+    .program-card {
+      background: var(--section-tint);
+      border: 1px solid var(--section-line);
+      border-radius: 20px;
+      padding: 18px;
+      display: grid;
+      gap: 14px;
+      align-content: start;
+      min-width: 0;
+    }
+
+    .day-header {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--section-line);
+    }
+    .day-label {
+      display: inline-block;
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      line-height: 1;
+      text-transform: uppercase;
+      margin: 0;
+    }
+    .day-header h3 {
+      margin: 0;
+      font-size: 1.02rem;
+      line-height: 1.25;
+    }
+    .day-header + .exercise-list {
+      margin-top: 0;
+    }
+    .comparison-scroll {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      border: 1px solid var(--section-line);
+      border-radius: 14px;
+      background: var(--surface);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 14px 10px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      white-space: normal;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+
+    .comparison-scroll table {
+      width: max-content;
+      min-width: 100%;
+    }
+
+    .comparison-scroll th,
+    .comparison-scroll td {
+      white-space: nowrap;
+      word-break: normal;
+      overflow-wrap: normal;
+    }
+
+    .labs-table {
+      width: 100%;
+      table-layout: fixed;
+    }
+    th {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      background: var(--surface-soft);
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+    tr:last-child td { border-bottom: none; }
+    .program-top, .widget-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: end;
+      flex-wrap: wrap;
+    }
+    .date-input {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 12px;
+      font: inherit;
+      color: var(--text);
+      background: var(--surface);
+      min-width: 170px;
+      max-width: 100%;
+    }
+    .measure-input {
+      width: 80px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 9px 10px;
+      font: inherit;
+      color: var(--text);
+      background: var(--surface);
+      max-width: 100%;
+    }
+    .date-input:focus, .measure-input:focus {
+      outline: 2px solid var(--accent-soft);
+      border-color: var(--accent);
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 88px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid var(--line);
+      background: var(--surface);
+    }
+    .pill.good { color: var(--ok); background: var(--ok-soft); }
+    .pill.warn { color: var(--warn); background: var(--warn-soft); }
+    .pill.bad { color: var(--bad); background: var(--bad-soft); }
+    .pill.neutral { color: var(--accent); background: var(--accent-soft); }
+    .meal-plan, .steps { display: grid; gap: 14px; }
+    .meal-row, .step {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      display: grid;
+      gap: 8px;
+    }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+    .tag {
+      display: inline-flex; align-items: center; border-radius: 999px;
+      padding: 6px 10px; font-size: 12px; border: 1px solid var(--line);
+      background: var(--surface); color: var(--muted);
+    }
+    .two-col-list {
+      columns: 2;
+      column-gap: 24px;
+    }
+
+    .two-col-list li {
+      break-inside: avoid;
+    }
+
+    
+    .shopping-row {
+      display: block;
+    }
+
+    .shopping-card {
+      width: 100%;
+      max-width: none;
+    }
+
+    .shopping-columns {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 32px;
+      width: 100%;
+      margin-top: 12px;
+    }
+
+    .shopping-columns ul {
+      margin: 0;
+    }
+
+@media (max-width: 980px) {
+      .cols-2, .cols-3, .program-grid { grid-template-columns: 1fr; }
+      .two-col-list { columns: 2; }
+    }
+
+    .section-grid[style*="grid-template-columns: 1fr"] {
+      width: 100%;
+    }
+
+@media (max-width: 720px) {
+      .two-col-list { columns: 1; }
+    }
+  
+    /* ---------- responsive: one file, phone through desktop ---------- */
+    html { -webkit-text-size-adjust: 100%; }
+
+    /* 4 day cards: fit as many columns as the width allows, never squash */
+    .program-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+
+    /* tables never blow out the layout */
+    .table-card, .section-card, .section-shell { overflow-x: auto; }
+
+    @media (max-width: 900px) {
+      .shopping-columns { grid-template-columns: 1fr; gap: 18px; }
+      .program-top, .widget-head { align-items: flex-start; }
+    }
+
+    @media (max-width: 760px) {
+      body { font-size: 17px; line-height: 1.6; }
+      .shell {
+        width: 100%;
+        padding: 12px max(12px, env(safe-area-inset-left)) 40px max(12px, env(safe-area-inset-right));
+      }
+      nav { top: 6px; border-radius: 16px; padding: 6px; }
+      nav a { padding: 12px 14px; font-size: 15px; }
+      .section { margin-top: 18px; scroll-margin-top: 76px; }
+      .section-shell { padding: 14px; border-radius: 18px; }
+      .section-card, .table-card, .program-card { padding: 14px; border-radius: 16px; }
+      h1 { font-size: clamp(1.9rem, 8vw, 2.4rem); }
+      h2 { font-size: clamp(1.4rem, 6vw, 1.8rem); }
+      .day-header h3, h3 { font-size: 1.08rem; }
+      .exercise-item a { display: inline-block; padding: 4px 0; font-size: 0.95rem; }
+      .two-col-list { columns: 1; }
+      th, td { padding: 10px 8px; }
+      .measure-input { width: 72px; }
+      .date-input { width: 100%; min-width: 0; }
+    }
+
+    @media (max-width: 420px) {
+      .section-shell { padding: 12px; }
+      .pill { min-width: 0; }
+    }
+
+  
+    /* ---------- collapsible meal options ---------- */
+    .meal-option {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .meal-option + .meal-option { margin-top: 10px; }
+    .meal-option > summary {
+      cursor: pointer;
+      list-style: none;
+      padding: 13px 40px 13px 14px;
+      position: relative;
+      display: block;
+    }
+    .meal-option > summary::-webkit-details-marker { display: none; }
+    .meal-option > summary::after {
+      content: "";
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      width: 8px; height: 8px;
+      margin-top: -5px;
+      border-right: 2px solid var(--muted);
+      border-bottom: 2px solid var(--muted);
+      transform: rotate(45deg);
+      transition: transform 0.18s ease;
+    }
+    .meal-option[open] > summary::after { transform: rotate(-135deg); margin-top: -2px; }
+    .meal-option > summary:hover { background: var(--surface-soft); }
+    .meal-option > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+    .opt-name { display: block; color: var(--text); font-weight: 600; }
+    .opt-blurb { display: block; color: var(--muted); font-size: 0.85rem; margin-top: 2px; }
+    .opt-body {
+      padding: 0 14px 14px;
+      display: grid;
+      gap: 6px;
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+    }
+    .opt-body p { font-size: 0.95rem; }
+    @media (max-width: 760px) {
+      .meal-option > summary { padding: 15px 40px 15px 14px; }
+    }
+  </style>
 </head>
 <body>
-<script>
-(async () => {
-  const sourceUrl = 'https://cdn.jsdelivr.net/gh/viniciusacmauro/Health@3e1ce33164cb35c278705c48962ccc7d7399c5b9/index.html';
-  const oldExercise = '<li class="exercise-item"><strong>Prone Y Raise — 2 × 10–15</strong><span>Lower trapezius — the direct counter to rounded shoulders. Face down, thumbs up.</span> <a href="https://www.youtube.com/results?search_query=prone+y+raise+exercise+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>';
-  const newExercise = '<li class="exercise-item"><strong>Scapular Push-Up / Push-Up Plus — 2 × 10–15</strong><span>Serratus and scapular-control work without the neck-painful prone Y position.</span> <a href="https://www.youtube.com/results?search_query=scapular+push+up+push+up+plus+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>';
+  <div class="shell">
+    <nav>
+      <div class="links">
+        <a href="#training">Training</a>
+        <a href="#nutrition">Nutrition</a>
+        <a href="#routine">Routine</a>
+      </div>
+    </nav>
 
-  try {
-    const response = await fetch(sourceUrl, { cache: "no-store" });
-    if (!response.ok) {
-      throw new Error(`Unable to load guide (${response.status})`);
-    }
+    
+<section class="section" id="training">
+      <div class="section-title">
+        <h1>Training</h1>
+      </div>
 
-    const original = await response.text();
-    const occurrences = original.split(oldExercise).length - 1;
+      <div class="section-shell">
+        <div class="program-top">
+          <div>
+            <h2>3-day program · 4 exercises per session</h2>
+          </div>
+          <p class="small">About 15–18 minutes per session · dumbbells (5–25kg) + flat bench · arms, chest and shoulders carry 21 of the 36 weekly sets</p>
+        </div>
 
-    if (occurrences !== 1) {
-      throw new Error(`Expected one Prone Y Raise block; found ${occurrences}`);
-    }
+        <div class="program-grid">
+          <article class="program-card">
+            <div class="day-header"><span class="day-label">Day 1</span><h3>Chest · Back · Triceps · Hinge</h3></div>
+            <ul class="exercise-list">
+              <li class="exercise-item"><strong>Neutral-Grip Dumbbell Bench Press — 3 × 6–10</strong><span>Flat bench. Palms facing each other, full range, no overhead lockout.</span> <a href="https://www.youtube.com/results?search_query=neutral+grip+dumbbell+bench+press+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
+              <li class="exercise-item"><strong>One-Arm Dumbbell Row — 3 × 8–12 / side</strong><span>Hand and knee on the bench, torso square. Also loads the biceps.</span> <a href="https://www.youtube.com/results?search_query=one+arm+dumbbell+row+bench+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
+              <li class="exercise-item"><strong>Dumbbell Skull Crusher — 3 × 8–12</strong><span>Flat bench. Triceps in the stretched position, elbows fixed.</span> <a href="https://www.youtube.com/results?search_query=dumbbell+skull+crusher+lying+triceps+extension+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
+              <li class="exercise-item"><strong>Dumbbell Romanian Deadlift — 3 × 8–12</strong><span>Glutes, hamstrings and spinal erectors. Hips back, flat back, dumbbells close to the legs.</span> <a href="https://www.youtube.com/results?search_query=dumbbell+romanian+deadlift+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
+            </ul>
+          </article>
 
-    const updated = original.replace(oldExercise, newExercise);
-    document.open();
-    document.write(updated);
-    document.close();
-  } catch (error) {
-    document.body.innerHTML =
-      '<main style="font-family:system-ui;padding:24px;max-width:720px;margin:auto">' +
-      '<h1>Guide could not load</h1><p>' +
-      String(error.message) +
-      '</p></main>';
-  }
-})();
-</script>
+          <article class="program-card">
+            <div class="day-header"><span class="day-label">Day 2</span><h3>Chest · Shoulders · Biceps · Single-Leg</h3></div>
+            <ul class="exercise-list">
+              <li class="exercise-item"><strong>Close-Grip Dumbbell Bench Press — 3 × 8–12</strong><span>Flat bench, dumbbells pressed together, elbows tucked. Second triceps exposure of the week.</span> <a href="https://www.youtube.com/results?search_query=close+grip+dumbbell+bench+press+crush+press+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
+              <li class="exercise-item"><strong>Dumbbell Lateral Raise — 3 × 12–20</strong><span>Side delts. Slow lowering, no swing.</span> <a href="https://www.youtube.com/results?search_query=dumbbell+lateral+raise+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
+              <li class="exercise-item"><strong>Seated Dumbbell Curl — 3 × 8–12</strong><span>Biceps. Seated on the flat bench, upper arm still.</span> <a href="https://www.youtube.com/results?search_query=seated+dumbbell+biceps+curl+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
+              <li class="exercise-item"><strong>Dumbbell Split Squat — 3 × 8–12 / side</strong><span>Single-leg glute and quad work — the direct hip-stability lift. Hand on a wall for balance.</span> <a href="https://www.youtube.com/results?search_query=dumbbell+split+squat+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
+            </ul>
+          </article>
+
+          <article class="program-card">
+            <div class="day-header"><span class="day-label">Day 3</span><h3>Chest · Shoulders · Rear Delts · Biceps</h3></div>
+            <ul class="exercise-list">
+              <li class="exercise-item"><strong>Dumbbell Chest Fly — 3 × 10–15</strong><span>Flat bench. Soft elbows, chest stretched at the bottom.</span> <a href="https://www.youtube.com/results?search_query=flat+bench+dumbbell+chest+fly+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
+              <li class="exercise-item"><strong>Dumbbell Lateral Raise — 3 × 12–20</strong><span>Second side-delt session of the week.</span> <a href="https://www.youtube.com/results?search_query=dumbbell+lateral+raise+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
+              <li class="exercise-item"><strong>Seated Bent-Over Dumbbell Reverse Fly — 3 × 10–15</strong><span>Rear delts and upper back — the counterweight to all the pressing.</span> <a href="https://www.youtube.com/results?search_query=seated+bent+over+dumbbell+reverse+fly+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
+              <li class="exercise-item"><strong>Dumbbell Hammer Curl — 3 × 8–12</strong><span>Brachialis and forearm, neutral grip throughout.</span> <a href="https://www.youtube.com/results?search_query=dumbbell+hammer+curl+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="section-grid" style="grid-template-columns: 1fr; margin-top:16px;">
+          <div class="section-card soft">
+            <h3>Floor block — four exercises, do this anywhere</h3>
+            <p class="small">Two for the hip, one for the shoulder blades, one for mobility. 5 minutes, mat only, aim for 2× per week — no basement space needed.</p>
+            <ul class="exercise-list" style="margin-top:12px;">
+              <li class="exercise-item"><strong>Side-Lying Hip Abduction — 2 × 12–20 / side</strong><span>Highest-activation gluteus medius exercise on record (~80% MVIC). Top leg straight, toe slightly down.</span> <a href="https://www.youtube.com/results?search_query=side+lying+hip+abduction+exercise+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
+              <li class="exercise-item"><strong>Side Plank — 2 × 15–30 sec / side</strong><span>Trunk and lateral hip together. Equal time both sides.</span> <a href="https://www.youtube.com/results?search_query=side+plank+exercise+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
+              <li class="exercise-item"><strong>Prone Y Raise — 2 × 10–15</strong><span>Lower trapezius — the direct counter to rounded shoulders. Face down, thumbs up.</span> <a href="https://www.youtube.com/results?search_query=prone+y+raise+exercise+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
+              <li class="exercise-item"><strong>Half-Kneeling Hip Flexor Stretch — 1 × 30 sec / side</strong><span>Rear knee down, squeeze that glute, tuck the pelvis.</span> <a href="https://www.youtube.com/results?search_query=half+kneeling+hip+flexor+stretch+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="nutrition">
+      <div class="section-title">
+        <h2>Nutrition</h2>
+      </div>
+      <div class="section-shell">
+        <div class="section-grid cols-2">
+          <div class="section-card">
+            <h3>Meal 1 · Breakfast</h3>
+            <div class="meal-plan" style="margin-top:12px;">
+              <details class="meal-option">
+                <summary><span class="opt-name">Option A · Greek yogurt bowl</span><span class="opt-blurb">No cooking · ~40 g protein</span></summary>
+                <div class="opt-body">
+                  <p>250 g plain 0% Greek yogurt mixed with 1/2 scoop of whey protein.</p>
+                  <p>Top with 1/2 cup blueberries or raspberries.</p>
+                  <p>Add 1 tbsp pumpkin seeds or crushed walnuts.</p>
+                  <div class="tag-row"><span class="tag">No cooking</span><span class="tag">High protein</span></div>
+                </div>
+              </details>
+              <details class="meal-option">
+                <summary><span class="opt-name">Option B · Egg scramble</span><span class="opt-blurb">Choline-focused · ~35 g protein</span></summary>
+                <div class="opt-body">
+                  <p>3 whole eggs plus 2 egg whites, scrambled with a large handful of spinach.</p>
+                  <p>1/4 avocado and 1 slice of rye or sourdough on the side.</p>
+                  <p>Choline from the yolks offsets the mild anticholinergic effect of paroxetine.</p>
+                  <div class="tag-row"><span class="tag">Cooked</span><span class="tag">Choline</span></div>
+                </div>
+              </details>
+              <details class="meal-option">
+                <summary><span class="opt-name">Option C · Protein oats</span><span class="opt-blurb">Training mornings · ~35 g protein</span></summary>
+                <div class="opt-body">
+                  <p>50 g rolled oats cooked in water or milk.</p>
+                  <p>Stir in 1 scoop of whey after it cools slightly, so it doesn&#x27;t clump.</p>
+                  <p>Half a banana and 1 tbsp natural peanut butter.</p>
+                  <div class="tag-row"><span class="tag">Carb-forward</span><span class="tag">Pre-training</span></div>
+                </div>
+              </details>
+            </div>
+          </div>
+
+          <div class="section-card">
+            <h3>Meal 2 · Morning snack</h3>
+            <div class="meal-plan" style="margin-top:12px;">
+              <details class="meal-option">
+                <summary><span class="opt-name">Option A · Eggs and cheese</span><span class="opt-blurb">No prep · ~20 g protein</span></summary>
+                <div class="opt-body">
+                  <p>2 hard-boiled eggs plus 1 part-skim string cheese.</p>
+                  <div class="tag-row"><span class="tag">No cooking</span></div>
+                </div>
+              </details>
+              <details class="meal-option">
+                <summary><span class="opt-name">Option B · Cottage cheese</span><span class="opt-blurb">No prep · ~20 g protein</span></summary>
+                <div class="opt-body">
+                  <p>150 g of 2% cottage cheese topped with sliced cucumber and black pepper.</p>
+                  <div class="tag-row"><span class="tag">No cooking</span></div>
+                </div>
+              </details>
+              <details class="meal-option">
+                <summary><span class="opt-name">Option C · Nuts and fruit</span><span class="opt-blurb">Portable · no fridge needed</span></summary>
+                <div class="opt-body">
+                  <p>30 g mixed nuts with one apple or pear.</p>
+                  <p>Use this one when you&#x27;re out of the house.</p>
+                  <div class="tag-row"><span class="tag">Portable</span></div>
+                </div>
+              </details>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-grid cols-2">
+          <div class="section-card">
+            <h3>Meal 3 · Lunch</h3>
+            <div class="meal-plan" style="margin-top:12px;">
+              <details class="meal-option">
+                <summary><span class="opt-name">Option A · Chicken and quinoa</span><span class="opt-blurb">~45 g protein</span></summary>
+                <div class="opt-body">
+                  <p>150 g cooked grilled chicken breast, extra-lean ground beef or turkey.</p>
+                  <p>1 cup cooked quinoa or 1 medium baked sweet potato.</p>
+                  <p>2 cups mixed dark leafy greens with 1 tbsp olive oil or 1/4 avocado.</p>
+                  <div class="tag-row"><span class="tag">Balanced</span></div>
+                </div>
+              </details>
+              <details class="meal-option">
+                <summary><span class="opt-name">Option B · Sardines or tuna</span><span class="opt-blurb">Omega-3 · ~35 g protein</span></summary>
+                <div class="opt-body">
+                  <p>1 tin (100–120 g) of sardines or tuna on 2 slices of rye, with tomato and olive oil.</p>
+                  <p>Side salad of greens.</p>
+                  <p>Your omega-3 index was 5.91% against an optimal ≥6.1% — this is the cheapest way to move it.</p>
+                  <div class="tag-row"><span class="tag">Omega-3</span><span class="tag">No cooking</span></div>
+                </div>
+              </details>
+              <details class="meal-option">
+                <summary><span class="opt-name">Option C · Beef and rice bowl</span><span class="opt-blurb">Iron · ~45 g protein</span></summary>
+                <div class="opt-body">
+                  <p>150 g extra-lean ground beef with 1 cup cooked rice.</p>
+                  <p>Half a cup of black beans, salsa, and a handful of greens.</p>
+                  <p>Heme iron plus the beans&#x27; folate; useful given ferritin at 97 µg/L.</p>
+                  <div class="tag-row"><span class="tag">Iron</span><span class="tag">Batch-cook</span></div>
+                </div>
+              </details>
+            </div>
+          </div>
+
+          <div class="section-card">
+            <h3>Meal 4 · Afternoon snack</h3>
+            <div class="meal-plan" style="margin-top:12px;">
+              <details class="meal-option">
+                <summary><span class="opt-name">Option A · Turkey and avocado</span><span class="opt-blurb">~25 g protein</span></summary>
+                <div class="opt-body">
+                  <p>4 slices, about 100 g, of deli smoked turkey breast wrapped around 1/4 avocado.</p>
+                  <div class="tag-row"><span class="tag">No cooking</span></div>
+                </div>
+              </details>
+              <details class="meal-option">
+                <summary><span class="opt-name">Option B · Yogurt and almonds</span><span class="opt-blurb">~20 g protein</span></summary>
+                <div class="opt-body">
+                  <p>120 g plain Greek yogurt mixed with 10–12 almonds.</p>
+                  <div class="tag-row"><span class="tag">No cooking</span></div>
+                </div>
+              </details>
+              <details class="meal-option">
+                <summary><span class="opt-name">Option C · Shake and fruit</span><span class="opt-blurb">Lowest effort · ~25 g protein</span></summary>
+                <div class="opt-body">
+                  <p>1 scoop whey in water with an apple.</p>
+                  <p>Use this on days when appetite is still suppressed.</p>
+                  <div class="tag-row"><span class="tag">Portable</span></div>
+                </div>
+              </details>
+              <div class="meal-row">
+                <strong>Rule</strong>
+                <p>Eat this before the lisdexamfetamine wears off, not after.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-grid cols-2">
+          <div class="section-card">
+            <h3>Meal 5 · Dinner</h3>
+            <div class="meal-plan" style="margin-top:12px;">
+              <details class="meal-option">
+                <summary><span class="opt-name">Option A · Salmon</span><span class="opt-blurb">Omega-3 · aim for 3 nights/week</span></summary>
+                <div class="opt-body">
+                  <p>160 g baked salmon fillet.</p>
+                  <p>Roasted asparagus or Brussels sprouts tossed in olive oil.</p>
+                  <div class="tag-row"><span class="tag">Omega-3</span></div>
+                </div>
+              </details>
+              <details class="meal-option">
+                <summary><span class="opt-name">Option B · Steak or bison</span><span class="opt-blurb">Iron · 2–3 nights/week</span></summary>
+                <div class="opt-body">
+                  <p>150 g lean sirloin steak or bison with sautéed broccoli and onions.</p>
+                  <p>1 cup brown or wild rice.</p>
+                  <div class="tag-row"><span class="tag">Iron</span></div>
+                </div>
+              </details>
+              <details class="meal-option">
+                <summary><span class="opt-name">Option C · Chicken thighs and lentils</span><span class="opt-blurb">Folate and fibre · 1–2 nights/week</span></summary>
+                <div class="opt-body">
+                  <p>180 g boneless chicken thighs, roasted.</p>
+                  <p>1 cup cooked lentils and roasted mixed vegetables.</p>
+                  <p>Cheapest of the three and the highest fibre.</p>
+                  <div class="tag-row"><span class="tag">Fibre</span><span class="tag">Budget</span></div>
+                </div>
+              </details>
+              <div class="meal-row">
+                <strong>Rule</strong>
+                <p>In alcohol days, drop the rice or potatoes, but keep the protein portion and vegetables the same.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-card">
+            <h3>Meal 6 · Night snack</h3>
+            <div class="meal-plan" style="margin-top:12px;">
+              <details class="meal-option">
+                <summary><span class="opt-name">Option A · Cottage cheese</span><span class="opt-blurb">Slow protein · ~20 g</span></summary>
+                <div class="opt-body">
+                  <p>150 g plain cottage cheese dusted with cinnamon.</p>
+                  <div class="tag-row"><span class="tag">No cooking</span></div>
+                </div>
+              </details>
+              <details class="meal-option">
+                <summary><span class="opt-name">Option B · Casein shake</span><span class="opt-blurb">Slow protein · ~25 g</span></summary>
+                <div class="opt-body">
+                  <p>1 scoop micellar casein blended with water and 1 tbsp chia seeds.</p>
+                  <div class="tag-row"><span class="tag">No cooking</span></div>
+                </div>
+              </details>
+              <details class="meal-option">
+                <summary><span class="opt-name">Option C · Yogurt and flax</span><span class="opt-blurb">Slow protein · ~22 g</span></summary>
+                <div class="opt-body">
+                  <p>200 g plain Greek yogurt with 1 tbsp ground flaxseed.</p>
+                  <div class="tag-row"><span class="tag">No cooking</span><span class="tag">Omega-3</span></div>
+                </div>
+              </details>
+              <div class="meal-row">
+                <strong>Rule</strong>
+                <p>Keep this low-sugar and protein-centred. Magnesium bisglycinate goes here.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-grid shopping-row">
+          <div class="section-card shopping-card">
+            <h3>Shopping list core essentials</h3>
+            <div class="shopping-columns">
+              <ul class="priority-list" style="margin-top:12px;">
+                <li>2% cottage cheese</li>
+                <li>Almonds</li>
+                <li>Apples or pears</li>
+                <li>Asparagus or Brussels sprouts</li>
+                <li>Avocados</li>
+                <li>Bananas</li>
+                <li>Black beans</li>
+                <li>Broccoli</li>
+                <li>Brown or wild rice</li>
+                <li>Chia seeds</li>
+                <li>Chicken breast</li>
+                <li>Chicken thighs</li>
+                <li>Cinnamon</li>
+                <li>Cucumber</li>
+                <li>Dried or tinned lentils</li>
+                <li>Eggs</li>
+                <li>Extra-lean ground beef or turkey</li>
+                <li>Fresh salmon fillets</li>
+                <li>Frozen or fresh berries</li>
+                <li>Ground flaxseed</li>
+              </ul>
+              <ul class="priority-list" style="margin-top:12px;">
+                <li>Lean sirloin steak or bison</li>
+                <li>Micellar casein</li>
+                <li>Mixed nuts</li>
+                <li>Natural peanut butter</li>
+                <li>Olive oil</li>
+                <li>Onions</li>
+                <li>Part-skim string cheese</li>
+                <li>Plain 0% Greek yogurt</li>
+                <li>Pumpkin seeds</li>
+                <li>Quinoa</li>
+                <li>Rolled oats</li>
+                <li>Rye or sourdough bread</li>
+                <li>Salsa</li>
+                <li>Sliced smoked turkey breast</li>
+                <li>Spinach or mixed greens</li>
+                <li>Sweet potatoes</li>
+                <li>Tinned sardines or tuna</li>
+                <li>Tomatoes</li>
+                <li>Walnuts</li>
+                <li>Whey protein</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="routine">
+      <div class="section-title"><h2>Routine</h2></div>
+      <div class="section-shell">
+        <div class="section-grid cols-2">
+          
+          
+          
+          <div class="section-card routine-card">
+            <h3>Supplements</h3>
+            <div class="steps" style="margin-top:12px;">
+              <div class="step">
+                <strong>Immediately after waking · empty</strong>
+                <p>Paroxetine 15 mg</p>
+              </div>
+              <div class="step">
+                <strong>Breakfast</strong>
+                <p>Lisdexamfetamine 20 mg, Omega-3 2,500 mg, Vitamin D3 2,500 IU, Creatine 3–5 g</p>
+              </div>
+              <div class="step">
+                <strong>Post workout</strong>
+                <p>Whey protein, 1 scoop</p>
+              </div>
+              <div class="step">
+                <strong>10:30 AM</strong>
+                <p>NAC 1,200 mg</p>
+              </div>
+              <div class="step">
+                <strong>13:00</strong>
+                <p>Lisdexamfetamine 10 mg</p>
+              </div>
+              <div class="step">
+                <strong>20:30</strong>
+                <p>Magnesium bisglycinate 200 mg</p>
+              </div>
+            </div>
+          </div>
+
+
+          
+          <div class="section-card routine-card">
+            <h3>Skin Care</h3>
+            <div class="steps" style="margin-top:12px;">
+              <div class="step">
+                <strong>AM routine</strong>
+                <p>Dove soap during shower, then ISDIN SPF 60.</p>
+              </div>
+              <div class="step">
+                <strong>PM routine</strong>
+                <p>Normaderm Gel (Let skin dry).</p>
+                <p>Hyaluronic Acid (Mondays, Wednesdays, and Fridays).</p>
+                <p>RoC Retinol (Tuesdays, Thursdays, and Saturdays).</p>
+                <p>Glycolic (Sundays).</p>
+                <p>CeraVe PM.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
 </body>
 </html>
