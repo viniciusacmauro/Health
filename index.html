@@ -56,7 +56,8 @@
       border: 1px solid var(--line);
       border-radius: 999px;
       padding: 8px;
-      overflow: auto;
+      overflow-x: auto;
+      overflow-y: hidden;
     }
     nav .links { display: flex; gap: 8px; min-width: max-content; }
     nav a {
@@ -77,6 +78,11 @@
     h3 { font-size: 1.05rem; }
     h4 { font-size: 1rem; }
     p { margin: 0; color: var(--muted); }
+
+    .small {
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
     .section { margin-top: 26px; scroll-margin-top: 90px; }
     .section-title { margin-bottom: 14px; }
     .section-shell {
@@ -113,12 +119,6 @@
     .status-warn { color: var(--warn); }
     .status-info { color: var(--accent); }
     .status-bad { color: var(--bad); }
-    .program-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-top: 16px;
-    }
     .exercise-list, .plain-list, .priority-list {
       margin: 0; padding: 0; list-style: none; display: grid; gap: 10px;
     }
@@ -299,6 +299,25 @@
       max-width: none;
     }
 
+
+    .shopping-columns ul {
+      margin: 0;
+    }
+
+
+    .section-grid[style*="grid-template-columns: 1fr"] {
+      width: 100%;
+    }
+  
+
+    /* ---------- unified responsive layout ---------- */
+    .program-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
     .shopping-columns {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -307,64 +326,121 @@
       margin-top: 12px;
     }
 
-    .shopping-columns ul {
-      margin: 0;
-    }
+    @media (max-width: 1040px) {
+      .program-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
 
-@media (max-width: 980px) {
-      .cols-2, .cols-3, .program-grid { grid-template-columns: 1fr; }
-      .two-col-list { columns: 2; }
-    }
-
-    .section-grid[style*="grid-template-columns: 1fr"] {
-      width: 100%;
-    }
-
-@media (max-width: 720px) {
-      .two-col-list { columns: 1; }
-    }
-  
-    /* ---------- responsive: one file, phone through desktop ---------- */
-    html { -webkit-text-size-adjust: 100%; }
-
-    /* 4 day cards: fit as many columns as the width allows, never squash */
-    .program-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-
-    /* tables never blow out the layout */
-    .table-card, .section-card, .section-shell { overflow-x: auto; }
-
-    @media (max-width: 900px) {
-      .shopping-columns { grid-template-columns: 1fr; gap: 18px; }
-      .program-top, .widget-head { align-items: flex-start; }
+      .cols-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
     @media (max-width: 760px) {
-      body { font-size: 17px; line-height: 1.6; }
+      body {
+        font-size: 17px;
+        line-height: 1.6;
+      }
+
       .shell {
         width: 100%;
-        padding: 12px max(12px, env(safe-area-inset-left)) 40px max(12px, env(safe-area-inset-right));
+        padding:
+          12px max(12px, env(safe-area-inset-right))
+          40px max(12px, env(safe-area-inset-left));
       }
-      nav { top: 6px; border-radius: 16px; padding: 6px; }
-      nav a { padding: 12px 14px; font-size: 15px; }
-      .section { margin-top: 18px; scroll-margin-top: 76px; }
-      .section-shell { padding: 14px; border-radius: 18px; }
-      .section-card, .table-card, .program-card { padding: 14px; border-radius: 16px; }
-      h1 { font-size: clamp(1.9rem, 8vw, 2.4rem); }
-      h2 { font-size: clamp(1.4rem, 6vw, 1.8rem); }
-      .day-header h3, h3 { font-size: 1.08rem; }
-      .exercise-item a { display: inline-block; padding: 4px 0; font-size: 0.95rem; }
-      .two-col-list { columns: 1; }
-      th, td { padding: 10px 8px; }
-      .measure-input { width: 72px; }
-      .date-input { width: 100%; min-width: 0; }
+
+      nav {
+        top: 6px;
+        border-radius: 16px;
+        padding: 6px;
+      }
+
+      nav a {
+        padding: 12px 14px;
+        font-size: 15px;
+      }
+
+      .section {
+        margin-top: 18px;
+        scroll-margin-top: 76px;
+      }
+
+      .section-shell {
+        padding: 14px;
+        border-radius: 18px;
+      }
+
+      .section-card,
+      .table-card,
+      .program-card {
+        padding: 14px;
+        border-radius: 16px;
+      }
+
+      .cols-2,
+      .cols-3,
+      .program-grid,
+      .shopping-columns {
+        grid-template-columns: 1fr;
+      }
+
+      .shopping-columns {
+        gap: 18px;
+      }
+
+      .two-col-list {
+        columns: 1;
+      }
+
+      .program-top,
+      .widget-head {
+        align-items: flex-start;
+      }
+
+      h1 {
+        font-size: clamp(1.9rem, 8vw, 2.4rem);
+      }
+
+      h2 {
+        font-size: clamp(1.4rem, 6vw, 1.8rem);
+      }
+
+      .day-header h3,
+      h3 {
+        font-size: 1.08rem;
+      }
+
+      .exercise-item a {
+        display: inline;
+        font-size: 0.95rem;
+      }
+
+      th,
+      td {
+        padding: 10px 8px;
+      }
+
+      .measure-input {
+        width: 72px;
+      }
+
+      .date-input {
+        width: 100%;
+        min-width: 0;
+      }
     }
 
     @media (max-width: 420px) {
-      .section-shell { padding: 12px; }
-      .pill { min-width: 0; }
+      .section-shell {
+        padding: 12px;
+      }
+
+      .pill {
+        min-width: 0;
+      }
     }
 
-  
+
     /* ---------- collapsible meal options ---------- */
     .meal-option {
       background: #ffffff;
@@ -413,7 +489,7 @@
 </head>
 <body>
   <div class="shell">
-    <nav>
+    <nav aria-label="Guide sections">
       <div class="links">
         <a href="#training">Training</a>
         <a href="#nutrition">Nutrition</a>
@@ -421,7 +497,7 @@
       </div>
     </nav>
 
-    
+    <main>
 <section class="section" id="training">
       <div class="section-title">
         <h1>Training</h1>
@@ -468,13 +544,13 @@
         </div>
 
         <div class="section-grid" style="grid-template-columns: 1fr; margin-top:16px;">
-          <div class="section-card soft">
+          <div class="section-card">
             <h3>Floor block — four exercises, do this anywhere</h3>
             <p class="small">Two for the hip, one for the shoulder blades, one for mobility. 5 minutes, mat only, aim for 2× per week — no basement space needed.</p>
             <ul class="exercise-list" style="margin-top:12px;">
               <li class="exercise-item"><strong>Side-Lying Hip Abduction — 2 × 12–20 / side</strong><span>Highest-activation gluteus medius exercise on record (~80% MVIC). Top leg straight, toe slightly down.</span> <a href="https://www.youtube.com/results?search_query=side+lying+hip+abduction+exercise+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
               <li class="exercise-item"><strong>Side Plank — 2 × 15–30 sec / side</strong><span>Trunk and lateral hip together. Equal time both sides.</span> <a href="https://www.youtube.com/results?search_query=side+plank+exercise+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
-              <li class="exercise-item"><strong>Prone Y Raise — 2 × 10–15</strong><span>Lower trapezius — the direct counter to rounded shoulders. Face down, thumbs up.</span> <a href="https://www.youtube.com/results?search_query=prone+y+raise+exercise+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
+              <li class="exercise-item"><strong>Scapular Push-Up / Push-Up Plus — 2 × 10–15</strong><span>Serratus and scapular-control work without the neck-painful prone Y position.</span> <a href="https://www.youtube.com/results?search_query=scapular+push+up+push+up+plus+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
               <li class="exercise-item"><strong>Half-Kneeling Hip Flexor Stretch — 1 × 30 sec / side</strong><span>Rear knee down, squeeze that glute, tuck the pelvis.</span> <a href="https://www.youtube.com/results?search_query=half+kneeling+hip+flexor+stretch+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
             </ul>
           </div>
@@ -798,6 +874,7 @@
         </div>
       </div>
     </section>
+    </main>
 
   </div>
 
