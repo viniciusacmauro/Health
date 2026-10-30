@@ -29,6 +29,8 @@
       --labs-line: #e5e7eb;
       --routine-tint: #fffaf2;
       --routine-line: #fde7c7;
+      --physio-tint: #f3fbf6;
+      --physio-line: #cdebd9;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -110,6 +112,7 @@
     }
     .labs-card { background: var(--labs-tint); border-color: var(--labs-line); }
     .routine-card { background: var(--routine-tint); border-color: var(--routine-line); }
+    .physio-card { background: var(--physio-tint); border-color: var(--physio-line); }
     .status {
       display: inline-flex; align-items: center; width: fit-content;
       border-radius: 999px; padding: 6px 10px; font-size: 12px;
@@ -131,6 +134,7 @@
     }
     .exercise-item strong, .meal-row strong, .step strong { color: var(--text); display: block; margin-bottom: 2px; }
     .exercise-item a { font-size: 0.9rem; display: inline; margin-left: 0.2em; }
+    .cue { display: block; margin-top: 4px; font-size: 0.9rem; color: var(--ok); }
     .program-card {
       background: var(--section-tint);
       border: 1px solid var(--section-line);
@@ -289,7 +293,7 @@
       break-inside: avoid;
     }
 
-    
+
     .shopping-row {
       display: block;
     }
@@ -308,7 +312,7 @@
     .section-grid[style*="grid-template-columns: 1fr"] {
       width: 100%;
     }
-  
+
 
     /* ---------- unified responsive layout ---------- */
     .program-grid {
@@ -508,7 +512,7 @@
           <div>
             <h2>3-day program · 4 exercises per session</h2>
           </div>
-          <p class="small">About 15–18 minutes per session with 45 s rests · dumbbells (5–25kg) + flat bench · arms, chest and shoulders carry 27 of the 36 weekly sets</p>
+          <p class="small">About 15–18 minutes per session with 45 s rests · dumbbells (5–25kg) + flat bench · arms and chest carry 18 of the 36 weekly sets · no loaded raises until Ruben clears them (upper-trap over-activation, right side worse)</p>
         </div>
 
         <div class="program-grid">
@@ -516,44 +520,51 @@
             <div class="day-header"><span class="day-label">Day 1</span><h3>Chest · Back · Triceps · Hinge</h3></div>
             <ul class="exercise-list">
               <li class="exercise-item"><strong>Neutral-Grip Dumbbell Bench Press — 3 × 6–10</strong><span>Flat bench. Palms facing each other, full range, no overhead lockout.</span> <a href="https://www.youtube.com/results?search_query=neutral+grip+dumbbell+bench+press+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
-              <li class="exercise-item"><strong>One-Arm Dumbbell Row — 3 × 8–12 / side</strong><span>Hand and knee on the bench, torso square. Also loads the biceps.</span> <a href="https://www.youtube.com/results?search_query=one+arm+dumbbell+row+bench+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
+              <li class="exercise-item"><strong>One-Arm Dumbbell Row — 3 × 8–12 / side</strong><span>Hand and knee on the bench, torso square. Also loads the biceps.</span><span class="cue">Ruben's cue: shoulder down and back, never hiking toward the ear. Watch the right side.</span> <a href="https://www.youtube.com/results?search_query=one+arm+dumbbell+row+bench+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
               <li class="exercise-item"><strong>Dumbbell Skull Crusher — 3 × 8–12</strong><span>Flat bench. Triceps in the stretched position, elbows fixed.</span> <a href="https://www.youtube.com/results?search_query=dumbbell+skull+crusher+lying+triceps+extension+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
               <li class="exercise-item"><strong>Dumbbell Romanian Deadlift — 3 × 8–12</strong><span>Glutes, hamstrings and spinal erectors. Hips back, flat back, dumbbells close to the legs.</span> <a href="https://www.youtube.com/results?search_query=dumbbell+romanian+deadlift+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
             </ul>
           </article>
 
           <article class="program-card">
-            <div class="day-header"><span class="day-label">Day 2</span><h3>Chest · Shoulders · Biceps · Single-Leg</h3></div>
+            <div class="day-header"><span class="day-label">Day 2</span><h3>Chest · Back · Biceps · Single-Leg</h3></div>
             <ul class="exercise-list">
               <li class="exercise-item"><strong>Close-Grip Dumbbell Bench Press — 3 × 8–12</strong><span>Flat bench, dumbbells pressed together, elbows tucked. Second triceps exposure of the week.</span> <a href="https://www.youtube.com/results?search_query=close+grip+dumbbell+bench+press+crush+press+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
-              <li class="exercise-item"><strong>Dumbbell Lateral Raise — 3 × 12–20</strong><span>Side delts. Slow lowering, no swing.</span> <a href="https://www.youtube.com/results?search_query=dumbbell+lateral+raise+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
+              <li class="exercise-item"><strong>Chest-Supported Dumbbell Row — 3 × 10–15</strong><span>Face down on the flat bench, arms hanging. Row with the elbows close to the ribs. Replaces the lateral raise: pulling instead of raising, so the arm never loads above shoulder height.</span><span class="cue">Ruben's cue: shoulder blades down and back, no shrug at the top.</span> <a href="https://www.youtube.com/results?search_query=chest+supported+dumbbell+row+flat+bench+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
               <li class="exercise-item"><strong>Seated Dumbbell Curl — 3 × 8–12</strong><span>Biceps. Seated on the flat bench, upper arm still.</span> <a href="https://www.youtube.com/results?search_query=seated+dumbbell+biceps+curl+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
               <li class="exercise-item"><strong>Dumbbell Split Squat — 3 × 8–12 / side</strong><span>Single-leg glute and quad work — the direct hip-stability lift. Hand on a wall for balance.</span> <a href="https://www.youtube.com/results?search_query=dumbbell+split+squat+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
             </ul>
           </article>
 
           <article class="program-card">
-            <div class="day-header"><span class="day-label">Day 3</span><h3>Chest · Shoulders · Rear Delts · Biceps</h3></div>
+            <div class="day-header"><span class="day-label">Day 3</span><h3>Chest · Back · Glutes · Biceps</h3></div>
             <ul class="exercise-list">
               <li class="exercise-item"><strong>Dumbbell Chest Fly — 3 × 10–15</strong><span>Flat bench. Soft elbows, chest stretched at the bottom.</span> <a href="https://www.youtube.com/results?search_query=flat+bench+dumbbell+chest+fly+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
-              <li class="exercise-item"><strong>Dumbbell Lateral Raise — 3 × 12–20</strong><span>Second side-delt session of the week.</span> <a href="https://www.youtube.com/results?search_query=dumbbell+lateral+raise+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
-              <li class="exercise-item"><strong>Seated Bent-Over Dumbbell Reverse Fly — 3 × 10–15</strong><span>Rear delts and upper back — the counterweight to all the pressing.</span> <a href="https://www.youtube.com/results?search_query=seated+bent+over+dumbbell+reverse+fly+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
+              <li class="exercise-item"><strong>Chest-Supported Dumbbell Row — 3 × 10–15</strong><span>Second pull of the week, replacing the reverse fly. Same setup, neutral grip, pause for one second with the dumbbells at the ribs.</span><span class="cue">Ruben's cue: slow and controlled, no shoulder hike.</span> <a href="https://www.youtube.com/results?search_query=chest+supported+dumbbell+row+flat+bench+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
+              <li class="exercise-item"><strong>Dumbbell Glute Bridge — 3 × 10–15</strong><span>Shoulders on the floor, dumbbell across the hips. Ribs down, squeeze the glutes at the top. Added for the pelvis resting forward, which Ruben found compresses the lower back, right side worse.</span> <a href="https://www.youtube.com/results?search_query=dumbbell+glute+bridge+floor+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
               <li class="exercise-item"><strong>Dumbbell Hammer Curl — 3 × 8–12</strong><span>Brachialis and forearm, neutral grip throughout.</span> <a href="https://www.youtube.com/results?search_query=dumbbell+hammer+curl+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
             </ul>
           </article>
         </div>
 
         <div class="section-grid" style="grid-template-columns: 1fr; margin-top:16px;">
-          <div class="section-card">
-            <h3>Mobility block · hips, shoulder blades, head position</h3>
-            <p class="small">Three for the hips, two for the shoulder blades, one for the neck. About 9 minutes with 20 s rests, floor and wall only, 2–3× per week. Do it in this order.</p>
+          <div class="section-card physio-card">
+            <h3>Home exercises · prescribed by Ruben Dos Santos, PT, DPT (MyoDynamic, 30 Oct 2026)</h3>
+            <p class="small">Goal: 3 × 20 of each without difficulty. Needs a resistance band for exercise 2. These replace the previous mobility block.</p>
             <ul class="exercise-list" style="margin-top:12px;">
-              <li class="exercise-item"><strong>90/90 Hip Switch · 1 × 8 / side</strong><span>Sit with both knees bent to 90°, one leg in front and one to the side. Rotate both knees to the other side, hands off the floor if you can. Trains hip internal and external rotation.</span> <a href="https://www.youtube.com/results?search_query=90+90+hip+switch+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
-              <li class="exercise-item"><strong>Cossack Squat · 2 × 4 / side</strong><span>Wide stance. Sit into one hip with the other leg straight, toes up. Hold the bench for balance. Adductors and hip range under load.</span> <a href="https://www.youtube.com/results?search_query=cossack+squat+beginner+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
-              <li class="exercise-item"><strong>Half-Kneeling Hip Flexor Stretch · 1 × 30 sec / side</strong><span>Rear knee down, squeeze that glute, tuck the pelvis. Opens the front of the hip that sitting shortens.</span> <a href="https://www.youtube.com/results?search_query=half+kneeling+hip+flexor+stretch+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
-              <li class="exercise-item"><strong>Wall Slide · 2 × 10</strong><span>Forearms on the wall, press into it and slide up past shoulder height, shoulder blades wrapping forward. Serratus activation comparable to the push-up plus (Hardwick 2006).</span> <a href="https://www.youtube.com/results?search_query=wall+slide+serratus+anterior+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
-              <li class="exercise-item"><strong>Knee Push-Up Plus · 2 × 10</strong><span>From a knee push-up position, keep the elbows straight and push the floor away so the shoulder blades spread around the ribs. The core drill for scapular winging.</span> <a href="https://www.youtube.com/results?search_query=knee+push+up+plus+serratus+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
-              <li class="exercise-item"><strong>Wall Cervical Retraction · 8 × 5 sec hold</strong><span>Back and head against a wall, feet a few inches out, arms down. Keep the chin level and glide the head straight back into the wall at about 20% effort. Trains the deep neck flexors with no load on the upper back. Stop if you get tingling or numbness in an arm.</span> <a href="https://www.youtube.com/results?search_query=wall+cervical+retraction+chin+tuck+standing+how+to" target="_blank" rel="noopener noreferrer">How-to video</a></li>
+              <li class="exercise-item"><strong>1. Scapular Retractions — 3 × 20 / side</strong><span>One arm at a time, slow and controlled. Move the shoulder down and back. Do not let the shoulder hike up toward the ear.</span> <a href="https://www.youtube.com/shorts/1MaZsExnre4" target="_blank" rel="noopener noreferrer">How-to video</a></li>
+              <li class="exercise-item"><strong>2. Banded Pull Apart + Raise — 3 × 20</strong><span>Raise only to just above eye level, no further.</span> <a href="https://www.youtube.com/shorts/zMG_xoB_a7E" target="_blank" rel="noopener noreferrer">How-to video</a></li>
+              <li class="exercise-item"><strong>3. Core Activation + Alternating Legs — 3 × 20</strong><span>Extend the legs all the way instead of just marching.</span> <a href="https://www.youtube.com/shorts/-KT_SNqYD0c" target="_blank" rel="noopener noreferrer">How-to video</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="section-grid" style="grid-template-columns: 1fr; margin-top:16px;">
+          <div class="section-card">
+            <h3>Findings from the physio assessment · 30 Oct 2026</h3>
+            <ul class="exercise-list" style="margin-top:12px;">
+              <li class="exercise-item"><strong>Upper traps over-activating</strong><span>The shoulder blades are not lifting as they should, the right one less than the left, so the traps take over. All loaded raises (lateral raise, reverse fly) are out of the program until Ruben clears them.</span></li>
+              <li class="exercise-item"><strong>Lower back rests forward</strong><span>The pelvis sits tipped forward, compressing the lower back muscles, worse on the right. Glute work added on Day 3.</span></li>
             </ul>
           </div>
         </div>
@@ -821,9 +832,9 @@
       <div class="section-title"><h2>Routine</h2></div>
       <div class="section-shell">
         <div class="section-grid cols-2">
-          
-          
-          
+
+
+
           <div class="section-card routine-card">
             <h3>Medications and supplements</h3>
             <div class="steps" style="margin-top:12px;">
@@ -855,7 +866,7 @@
           </div>
 
 
-          
+
           <div class="section-card routine-card">
             <h3>Skin Care</h3>
             <div class="steps" style="margin-top:12px;">
